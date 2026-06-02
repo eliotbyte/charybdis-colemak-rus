@@ -1,0 +1,4 @@
+name: zmk-auto-mouse-layer
+build:
+  cmake: .
+  kconfig: Kconfig

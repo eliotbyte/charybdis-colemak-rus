@@ -1,0 +1,13 @@
+config ZMK_AUTO_MOUSE_LAYER
+    bool "Smart auto mouse layer"
+    default y
+
+config ZMK_AUTO_MOUSE_TIMEOUT_MS
+    int "Mouse layer idle timeout (ms)"
+    default 500
+    depends on ZMK_AUTO_MOUSE_LAYER
+
+config ZMK_AUTO_MOUSE_KB_LOCK_MS
+    int "Keyboard lock duration (ms)"
+    default 500
+    depends on ZMK_AUTO_MOUSE_LAYER

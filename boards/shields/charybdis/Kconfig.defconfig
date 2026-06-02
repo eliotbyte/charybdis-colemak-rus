@@ -1,0 +1,34 @@
+if SHIELD_CHARYBDIS_DONGLE
+
+config ZMK_KEYBOARD_NAME
+	default "Charybdis"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+	default y
+
+endif
+
+if SHIELD_CHARYBDIS_DONGLE || SHIELD_CHARYBDIS_LEFT || SHIELD_CHARYBDIS_RIGHT
+
+config ZMK_SPLIT
+	default y
+	
+endif
+
+if SHIELD_CHARYBDIS_DONGLE
+
+config ZMK_AUTO_MOUSE_LAYER
+	bool "Smart auto mouse layer"
+	default y
+
+config ZMK_AUTO_MOUSE_TIMEOUT_MS
+	int "Mouse layer idle timeout (ms)"
+	default 500
+	depends on ZMK_AUTO_MOUSE_LAYER
+
+config ZMK_AUTO_MOUSE_KB_LOCK_MS
+	int "Keyboard lock duration (ms)"
+	default 500
+	depends on ZMK_AUTO_MOUSE_LAYER
+
+endif

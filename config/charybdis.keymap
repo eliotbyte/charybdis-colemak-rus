@@ -1,0 +1,177 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/pointing.h>
+#include "behaviors/behavior_esc_layer_switch.dtsi"
+
+#define COLEMAK 0
+#define RUSSIAN 1
+#define MOUSE 2
+#define LOWER 3
+#define RAISE 4
+#define FUNCTION 5
+#define SCROLL 6
+#define MOUSE_SHIFT 7
+#define SCROLL_SHIFT 8
+#define SCREEN 9
+#define RESET 10
+
+#define MOVE_BASE (ZMK_POINTING_DEFAULT_MOVE_VAL)
+#define SCROLL_BASE (ZMK_POINTING_DEFAULT_SCRL_VAL * 16)
+#define SCROLL_FAST (SCROLL_BASE * 3)
+
+/ {
+  combos {
+    compatible = "zmk,combos";
+    timeout-ms = <20>;
+    require-prior-idle-ms = <250>;
+
+    combo_reset_layer_left {
+      key-positions = <20 24>;
+      bindings = <&to RESET>;
+    };
+    combo_reset_layer_right {
+      key-positions = <25 29>;
+      bindings = <&to RESET>;
+    };
+    combo_reset_central {
+      key-positions = <37 38>;
+      bindings = <&bootloader>;
+      require-prior-idle-ms = <2000>;
+    };
+    combo_esc {
+      key-positions = <1 2>;
+      bindings = <&kp ESCAPE>;
+    };
+    combo_tab {
+      key-positions = <2 3>;
+      bindings = <&kp TAB>;
+    };
+    combo_cdel {
+      key-positions = <11 12>;
+      bindings = <&kp LC(BACKSPACE)>;
+    };
+    combo_unlock {
+      key-positions = <0 4>;
+      bindings = <&studio_unlock>;
+    };
+  };
+
+  chosen {
+    zmk,physical-layout = &charybdis_6col_layout;
+  };
+
+  keymap {
+    compatible = "zmk,keymap";
+
+    Colemak {
+      display-name = "Colemak";
+      bindings = <
+        &kp TAB    &kp Q  &kp W  &kp F  &kp P  &kp G     &kp J  &kp L  &kp U     &kp Y    &kp SEMI  &lt FUNCTION ESCAPE
+        &kp LSHFT  &kp A  &kp R  &kp S  &kp T  &kp D     &kp H  &kp N  &kp E     &kp I    &kp O     &kp SQT
+        &kp LCTRL  &kp Z  &kp X  &kp C  &kp V  &kp B     &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH  &kp LGUI
+                            &to_rus LALT 0  &mo LOWER  &kp SPACE     &kp RET  &mo RAISE
+      >;
+    };
+
+    Russian {
+      display-name = "Russian";
+      bindings = <
+        &kp TAB    &kp Q  &kp W  &kp E  &kp R  &hold GRAVE T  &kp Y  &kp U       &hold O I   &kp P    &kp LBKT  &lt FUNCTION ESCAPE
+        &kp LSHFT  &kp A  &kp S  &kp D  &kp F  &kp G          &kp H  &kp J       &kp K       &kp L    &kp SEMI  &kp SQT
+        &kp LCTRL  &kp Z  &kp X  &kp C  &kp V  &kp B          &kp N  &hold RBKT M &kp COMMA  &kp DOT  &kp FSLH  &kp LGUI
+                            &to_eng LALT 0  &mo LOWER  &kp SPACE     &kp RET  &mo RAISE
+      >;
+    };
+
+    Mouse {
+      display-name = "Mouse";
+      bindings = <
+        &trans  &trans  &trans  &trans  &trans  &trans     &trans  &trans   &mkp MB3  &trans   &trans  &trans
+        &trans  &trans  &trans  &trans  &trans  &trans     &mo SCREEN  &mkp MB1  &mo SCROLL  &mkp MB2  &mo MOUSE_SHIFT  &trans
+        &trans  &trans  &trans  &trans  &trans  &trans     &trans  &mkp MB4  &mkp MB5  &trans   &trans  &trans
+                        &kp LALT  &trans  &trans     &trans  &trans
+      >;
+    };
+
+    Lower {
+      display-name = "Lower";
+      bindings = <
+        &kp TAB     &kp PSCRN    &kp DEL       &kp UP       &kp BSPC     &kp PGUP       &kp ASTRK  &kp N7  &kp N8  &kp N9  &kp FSLH  &kp ESCAPE
+        &kp LSHFT   &kp HOME     &kp LEFT      &kp DOWN     &kp RIGHT    &kp END        &kp PLUS   &kp N4  &kp N5  &kp N6  &kp MINUS &trans
+        &kp LCTRL   &trans       &kp C_VOL_DN  &kp C_MUTE   &kp C_VOL_UP &kp PGDN      &kp N0     &kp N1  &kp N2  &kp N3  &kp DOT   &trans
+                                &kp LALT     &trans       &kp SPACE    &kp RET        &trans
+      >;
+    };
+
+    Raise {
+      display-name = "Raise";
+      bindings = <
+        &kp TAB   &kp EXCL  &kp AT   &kp HASH  &kp DLLR  &kp PRCNT   &kp CARET  &kp AMPS  &kp ASTRK  &kp LPAR  &kp RPAR  &kp ESCAPE
+        &kp LSHFT &trans    &trans   &trans    &trans    &trans      &kp MINUS  &kp EQUAL &kp LBKT   &kp RBKT  &kp BSLH  &kp GRAVE
+        &kp LCTRL &trans    &trans   &trans    &trans    &trans      &kp UNDER  &kp PLUS  &kp LBRC   &kp RBRC  &kp PIPE  &kp TILDE
+                            &kp LALT  &trans   &kp SPACE  &kp RET     &trans
+      >;
+    };
+
+    Fun {
+      display-name = "Function";
+      bindings = <
+        &trans      &trans        &trans        &trans        &trans        &trans        &kp F12  &kp F7  &kp F8  &kp F9  &trans  &trans
+        &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp F11  &kp F4  &kp F5  &kp F6  &trans  &trans
+        &trans      &trans        &trans        &trans        &trans        &trans        &kp F10  &kp F1  &kp F2  &kp F3  &trans  &trans
+                                    &trans  &trans  &trans     &trans  &trans
+      >;
+    };
+
+    Scroll {
+      display-name = "Scroll";
+      bindings = <
+        &none  &none  &none  &msc MOVE_Y(SCROLL_BASE)   &none  &none     &none  &none   &mkp MB3  &none  &none  &none
+        &none  &none  &msc MOVE_X(-SCROLL_BASE) &msc MOVE_Y(-SCROLL_BASE) &msc MOVE_X(SCROLL_BASE) &none  &none  &mkp MB1  &none  &mkp MB2  &none  &none
+        &none  &none  &none  &none  &none  &none     &none  &mkp MB4  &mkp MB5  &none  &none  &none
+                        &none  &none  &none     &none  &mo SCROLL_SHIFT
+      >;
+    };
+
+    MouseShift {
+      display-name = "Mouse Shift";
+      bindings = <
+        &none  &none  &none  &mmv MOVE_Y(-MOVE_BASE)   &none  &none     &none  &none   &mkp MB3  &none  &none  &none
+        &none  &none  &mmv MOVE_X(-MOVE_BASE) &mmv MOVE_Y(MOVE_BASE) &mmv MOVE_X(MOVE_BASE) &none  &none  &mkp MB1  &mo SCROLL  &mkp MB2  &none  &none
+        &none  &none  &none  &none  &none  &none     &none  &mkp MB4  &mkp MB5  &none  &none  &none
+                        &none  &none  &none     &none  &mo MOUSE_SHIFT
+      >;
+    };
+
+    ScrollShift {
+      display-name = "Scroll Shift";
+      bindings = <
+        &none  &none  &none  &msc MOVE_Y(SCROLL_FAST)   &none  &none     &none  &none   &mkp MB3  &none  &none  &none
+        &none  &none  &msc MOVE_X(-SCROLL_FAST) &msc MOVE_Y(-SCROLL_FAST) &msc MOVE_X(SCROLL_FAST) &none  &none  &mkp MB1  &none  &mkp MB2  &none  &none
+        &none  &none  &none  &none  &none  &none     &none  &mkp MB4  &mkp MB5  &none  &none  &none
+                        &none  &none  &none     &none  &mo SCROLL_SHIFT
+      >;
+    };
+
+    Screen {
+      display-name = "Screen";
+      bindings = <
+        &none  &none  &none  &kp LG(TAB)   &none  &none     &none  &none   &mkp MB3  &none  &none  &none
+        &none  &none  &kp LC(LG(LEFT))  &kp LG(D)  &kp LC(LG(RIGHT))  &none  &none  &mkp MB1  &none  &mkp MB2  &none  &none
+        &none  &none  &none  &none  &none  &none     &none  &mkp MB4  &mkp MB5  &none  &none  &none
+                        &none  &none  &none     &none  &none
+      >;
+    };
+
+    Reset {
+      display-name = "Reset";
+      bindings = <
+        &trans  &none  &none  &none  &none  &none     &none  &none  &none  &none  &none  &trans
+        &trans  &none  &none  &none  &none  &none     &none  &none  &none  &none  &none  &trans
+        &trans  &none  &none  &none  &none  &none     &none  &none  &none  &none  &none  &trans
+                        &none  &bootloader  &bootloader     &bootloader  &none
+      >;
+    };
+  };
+};

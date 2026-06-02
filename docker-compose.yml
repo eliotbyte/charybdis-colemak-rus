@@ -1,0 +1,15 @@
+# Local firmware builds only. Requires Docker Desktop.
+#
+#   docker compose run --rm zmk-build
+#   docker compose run --rm zmk-build verify
+#
+services:
+  zmk-build:
+    image: zmkfirmware/zmk-build-arm:stable
+    working_dir: /work
+    volumes:
+      - .:/work
+    environment:
+      ZMK_CONFIG: /work/config
+    entrypoint: ["/bin/bash", "/work/scripts/docker-entrypoint.sh"]
+    command: ["firmware"]

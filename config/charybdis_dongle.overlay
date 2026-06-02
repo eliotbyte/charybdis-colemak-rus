@@ -1,0 +1,25 @@
+#include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+
+/ {
+    /delete-node/ auto_mouse_layer;
+};
+
+&trackball_listener {
+    /delete-node/ move;
+
+    input-processors = <&zip_xy_scaler 6 5>;
+
+    slow_pointer {
+        layers = <7>;
+        input-processors = <&zip_xy_scaler 3 5>;
+    };
+
+    scroller {
+        layers = <6>;
+        input-processors = <&zip_xy_to_scroll_mapper
+            &zip_scroll_scaler 30 48
+            &zip_scroll_transform (INPUT_TRANSFORM_Y_INVERT)
+        >;
+    };
+};

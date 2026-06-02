@@ -1,0 +1,51 @@
+#include <dt-bindings/zmk/input_transform.h>
+#include <input/processors.dtsi>
+
+#define COLEMAK 0
+#define RUSSIAN 1
+#define MOUSE 2
+#define LOWER 3
+#define RAISE 4
+#define FUNCTION 5
+#define SCROLL 6
+#define MOUSE_SHIFT 7
+
+/ {
+  split_inputs {
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    trackball_split: trackball_split@0 {
+      compatible = "zmk,input-split";
+      reg = <0>;
+    };
+  };
+
+  trackball_listener: trackball_listener {
+    compatible = "zmk,input-listener";
+    status = "disabled";
+    device = <&trackball_split>;
+
+    move {
+      layers = <COLEMAK RUSSIAN>;
+      input-processors = <&auto_mouse_layer MOUSE 1000>;
+    };
+
+    slow_pointer {
+      layers = <MOUSE_SHIFT>;
+      input-processors = <&zip_xy_scaler 1 3>;
+    };
+
+    scroll {
+      layers = <SCROLL>;
+      input-processors = <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>, <&zip_xy_scaler 1 3>, <&zip_xy_to_scroll_mapper>;
+    };
+  };
+
+  auto_mouse_layer: auto_mouse_layer {
+    compatible = "zmk,input-processor-temp-layer";
+    #input-processor-cells = <2>;
+    require-prior-idle-ms = <500>;
+    #excluded-positions = <36 37 38 16 17 18 10 11 12 13 22 23>;
+  };
+};
