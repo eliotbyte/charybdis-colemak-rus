@@ -1,0 +1,18 @@
+# West / ZMK (downloaded on first build)
+.west/
+/zmk/
+/zephyr/
+/modules/
+/bootloader/
+/tools/
+
+# Build outputs (never commit)
+build/
+dist/
+
+# Local noise
+*.log
+docker-*.log
+optional/
+prospector-zmk-module/
+zmk-pmw3610-driver/
