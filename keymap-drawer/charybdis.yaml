@@ -1,0 +1,269 @@
+# Manual keymap diagram source (may differ from config/charybdis.keymap).
+# Edit legends here; use `keymap parse` only to refresh key positions after physical changes.
+layout:
+  qmk_info_json: config/charybdis.json
+  layout_name: charybdis_6col_layout
+
+layers:
+  Colemak:
+    - - Tab
+      - Q
+      - W
+      - F
+      - P
+      - G
+      - J
+      - L
+      - U
+      - Y
+      - ;
+      - {t: Esc, h: Fn}
+    - - Shift
+      - A
+      - R
+      - S
+      - T
+      - D
+      - H
+      - N
+      - E
+      - I
+      - O
+      - "'"
+    - - Ctrl
+      - Z
+      - X
+      - C
+      - V
+      - B
+      - K
+      - M
+      - ","
+      - .
+      - /
+      - ⌘
+    - - {t: Alt, h: RUS}
+      - Lower
+      - Space
+      - Enter
+      - Raise
+
+  Russian:
+    - - Tab
+      - Й
+      - Ц
+      - У
+      - К
+      - {t: "`", h: Е}
+      - Н
+      - Г
+      - {t: Щ, h: Ш}
+      - З
+      - Х
+      - {t: Esc, h: Fn}
+    - - Shift
+      - Ф
+      - Ы
+      - В
+      - А
+      - П
+      - Р
+      - О
+      - Л
+      - Д
+      - Ж
+      - Э
+    - - Ctrl
+      - Я
+      - Ч
+      - С
+      - М
+      - И
+      - Т
+      - {t: Ъ, h: Ь}
+      - Б
+      - Ю
+      - .
+      - ⌘
+    - - {t: Alt, h: ENG}
+      - Lower
+      - Space
+      - Enter
+      - Raise
+
+  Lower:
+    - - Tab
+      - Pscr
+      - Del
+      - Up
+      - ⌫
+      - PgUp
+      - '*'
+      - '7'
+      - '8'
+      - '9'
+      - /
+      - Esc
+    - - Shift
+      - Home
+      - Left
+      - Down
+      - Right
+      - End
+      - +
+      - '4'
+      - '5'
+      - '6'
+      - '-'
+      - ''
+    - - Ctrl
+      - ''
+      - Vol-
+      - Mute
+      - Vol+
+      - PgDn
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - .
+      - ''
+    - - Alt
+      - ''
+      - Space
+      - Enter
+      - ''
+
+  Raise:
+    - - Tab
+      - '!'
+      - '@'
+      - '#'
+      - $
+      - '%'
+      - ^
+      - '&'
+      - '*'
+      - (
+      - )
+      - Esc
+    - - Shift
+      - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - '-'
+      - '='
+      - '['
+      - ']'
+      - \
+      - '`'
+    - - Ctrl
+      - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - _
+      - +
+      - '{'
+      - '}'
+      - '|'
+      - '~'
+    - - Alt
+      - ''
+      - Space
+      - Enter
+      - ''
+
+  Fn:
+    - - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - F12
+      - F7
+      - F8
+      - F9
+      - ''
+      - ''
+    - - BT_CLR
+      - BT0
+      - BT1
+      - BT2
+      - BT3
+      - BT4
+      - F11
+      - F4
+      - F5
+      - F6
+      - ''
+      - ''
+    - - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - F10
+      - F1
+      - F2
+      - F3
+      - ''
+      - ''
+    - - ''
+      - ''
+      - ''
+      - ''
+      - ''
+
+  Mouse:
+    - - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - M3
+      - ''
+      - ''
+      - ''
+    - - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - Screen
+      - M1
+      - Scroll
+      - M2
+      - MSh
+      - ''
+    - - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - ''
+      - M4
+      - M5
+      - ''
+      - ''
+      - ''
+    - - Alt
+      - ''
+      - ''
+      - ''
+      - ''
+
+draw_config:
+  key_w: 56
+  key_h: 56
+  split_gap: 30

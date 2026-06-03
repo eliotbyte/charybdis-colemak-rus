@@ -1,0 +1,1635 @@
+<svg width="900" height="2032" viewBox="0 0 900 2032" class="keymap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs class="charybdis-custom">
+  <linearGradient id="key-fill" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#2E2E2E"/>
+    <stop offset="100%" stop-color="#3C3A37"/>
+  </linearGradient>
+  <linearGradient id="key-fill-lower" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#262020"/>
+    <stop offset="100%" stop-color="#314A5C"/>
+  </linearGradient>
+  <linearGradient id="key-fill-raise" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#262020"/>
+    <stop offset="100%" stop-color="#5E4053"/>
+  </linearGradient>
+  <linearGradient id="key-fill-fn" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#262020"/>
+    <stop offset="100%" stop-color="#5B5540"/>
+  </linearGradient>
+  <linearGradient id="text-stroke" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#4A483D"/>
+    <stop offset="100%" stop-color="#000000"/>
+  </linearGradient>
+  <filter id="key-inner-shadow" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur"/>
+    <feOffset in="blur" dx="2" dy="2" result="lightBlur"/>
+    <feComposite in="SourceAlpha" in2="lightBlur" operator="out" result="shadowMask"/>
+    <feFlood flood-color="#9CA7DB" flood-opacity="0.1" result="shadowColor"/>
+    <feComposite in="shadowColor" in2="shadowMask" operator="in" result="innerShadow"/>
+    <feMerge>
+      <feMergeNode in="SourceGraphic"/>
+      <feMergeNode in="innerShadow"/>
+    </feMerge>
+  </filter>
+  <filter id="key-base-inner-shadow" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="3.9" result="blur"/>
+    <feComposite in="SourceAlpha" in2="blur" operator="out" result="shadowMask"/>
+    <feFlood flood-color="#2E3437" flood-opacity="0.5" result="shadowColor"/>
+    <feComposite in="shadowColor" in2="shadowMask" operator="in" result="innerShadow"/>
+    <feMerge>
+      <feMergeNode in="SourceGraphic"/>
+      <feMergeNode in="innerShadow"/>
+    </feMerge>
+  </filter>
+</defs><style>/* inherit to force styles through use tags */
+svg path {
+    fill: inherit;
+}
+
+/* font and background color specifications */
+svg.keymap {
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+    font-size: 14px;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+    fill: #24292e;
+}
+
+/* default key styling */
+rect.key {
+    fill: #f6f8fa;
+}
+
+rect.key, rect.combo {
+    stroke: #c9cccf;
+    stroke-width: 1;
+}
+
+/* default key side styling, only used is draw_key_sides is set */
+rect.side {
+    filter: brightness(90%);
+}
+
+/* color accent for combo boxes */
+rect.combo, rect.combo-separate {
+    fill: #cdf;
+}
+
+/* color accent for held keys */
+rect.held, rect.combo.held {
+    fill: #fdd;
+}
+
+/* color accent for ghost (optional) keys */
+rect.ghost, rect.combo.ghost {
+    stroke-dasharray: 4, 4;
+    stroke-width: 2;
+}
+
+text {
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+/* styling for layer labels */
+text.label {
+    font-weight: bold;
+    text-anchor: start;
+    stroke: white;
+    stroke-width: 4;
+    paint-order: stroke;
+}
+
+/* styling for optional footer */
+text.footer {
+    text-anchor: end;
+    dominant-baseline: auto;
+    stroke: white;
+    stroke-width: 4;
+    paint-order: stroke;
+}
+
+/* styling for combo tap, and key non-tap label text */
+text.combo, text.hold, text.shifted, text.left, text.right, text.tl, text.tr, text.bl, text.br {
+    font-size: 11px;
+}
+
+text.hold, text.bl, text.br {
+    text-anchor: middle;
+    dominant-baseline: auto;
+}
+
+text.shifted, text.tl, text.tr {
+    text-anchor: middle;
+    dominant-baseline: hanging;
+}
+
+text.left, text.tl, text.bl {
+    text-anchor: start;
+}
+
+text.right, text.tr, text.br {
+    text-anchor: end;
+}
+
+text.layer-activator {
+    text-decoration: underline;
+}
+
+/* styling for hold/shifted label text in combo box */
+text.combo.hold, text.combo.shifted, text.combo.left, text.combo.right {
+    font-size: 8px;
+}
+
+/* lighter symbol for transparent keys */
+text.trans {
+    fill: #7b7e81;
+}
+
+/* styling for combo dendrons */
+path.combo {
+    stroke-width: 1;
+    stroke: gray;
+    fill: none;
+}
+
+/* Start Tabler Icons Cleanup */
+/* cannot use height/width with glyphs */
+.icon-tabler > path {
+    fill: inherit;
+    stroke: inherit;
+    stroke-width: 2;
+}
+/* hide tabler's default box */
+.icon-tabler > path[stroke="none"][fill="none"] {
+    visibility: hidden;
+}
+/* End Tabler Icons Cleanup */
+
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/Inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/Inter-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+svg.keymap {
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+}
+svg.keymap text {
+  fill: #FFFFFF;
+  stroke: url(#text-stroke);
+  stroke-opacity: 0.25;
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-miterlimit: 1;
+  paint-order: stroke fill;
+}
+svg.keymap text.label {
+  font-weight: 400;
+  font-size: 34px;
+  text-anchor: start;
+  fill: #FFFFFF;
+  stroke: #1b1d1d;
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-miterlimit: 1;
+  paint-order: stroke fill;
+}
+text.trans {
+  fill: #FFFFFF;
+  stroke: url(#text-stroke);
+  stroke-opacity: 0.25;
+}
+.stacked-line1, .lang-line1 {
+  font-size: 13px;
+}
+.stacked-line2, .lang-line2 {
+  font-size: 17px;
+}
+.dual-line {
+  font-size: 17px;
+}
+.dual-line1 {
+  font-size: 13px;
+}
+.dual-line2 {
+  font-size: 17px;
+}
+svg.keymap .key-icon path {
+  stroke: url(#text-stroke);
+  stroke-opacity: 0.25;
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-miterlimit: 1;
+  paint-order: stroke fill;
+}
+svg.keymap .inline-icon path {
+  stroke: url(#text-stroke);
+  stroke-opacity: 0.25;
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-miterlimit: 1;
+  paint-order: stroke fill;
+}
+rect.key-top {
+  fill: url(#key-fill);
+  filter: url(#key-inner-shadow);
+  stroke: none;
+}
+rect.key-top.held, rect.combo.held {
+  fill: url(#key-fill);
+  filter: url(#key-inner-shadow);
+  stroke: none;
+}
+rect.key-base {
+  fill: #171717;
+  stroke: none;
+  filter: url(#key-base-inner-shadow);
+}
+.layer-Lower rect.key-top {
+  fill: url(#key-fill-lower);
+}
+.layer-Raise rect.key-top {
+  fill: url(#key-fill-raise);
+}
+.layer-Fn rect.key-top {
+  fill: url(#key-fill-fn);
+}
+</style>
+<g transform="translate(30, 0)" class="layer-Colemak">
+<text x="0" y="28" class="label" id="Colemak">Colemak</text>
+<g transform="translate(0, 56)">
+<g transform="translate(28, 60)" class="key keypos-0">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Tab</text>
+</g>
+<g transform="translate(84, 60)" class="key keypos-1">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Q</text>
+</g>
+<g transform="translate(140, 35)" class="key keypos-2">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">W</text>
+</g>
+<g transform="translate(196, 28)" class="key keypos-3">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F</text>
+</g>
+<g transform="translate(252, 35)" class="key keypos-4">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">P</text>
+</g>
+<g transform="translate(308, 35)" class="key keypos-5">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">G</text>
+</g>
+<g transform="translate(532, 35)" class="key keypos-6">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">J</text>
+</g>
+<g transform="translate(588, 35)" class="key keypos-7">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">L</text>
+</g>
+<g transform="translate(644, 28)" class="key keypos-8">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">U</text>
+</g>
+<g transform="translate(700, 35)" class="key keypos-9">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Y</text>
+</g>
+<g transform="translate(756, 60)" class="key keypos-10">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-9.5" class="dual-line" text-anchor="middle">:</text>
+<text x="0" y="11.5" class="dual-line" text-anchor="middle">;</text>
+</g>
+</g>
+<g transform="translate(812, 60)" class="key keypos-11">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="stacked-key">
+<text x="0" y="9" class="stacked-line2" text-anchor="middle">Esc</text>
+<g transform="translate(-11, -7)">
+<text x="0" y="0" class="stacked-line1" text-anchor="start" dominant-baseline="central">☇</text>
+<g transform="translate(10, -2.5)">
+<g class="inline-icon">
+<g transform="scale(0.097656) translate(-61.44, -58.595)">
+<path d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,116.73a3.2,3.2,0,0,1-4.76-3.46h0l8.92-39L1.09,47.92A3.2,3.2,0,0,1,3,42.32l39.74-3.56L58.49,2a3.2,3.2,0,0,1,5.9,0Z" style="fill: #F9D382" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g>
+</g>
+</g></g>
+<g transform="translate(28, 116)" class="key keypos-12">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Shift</text>
+</g>
+<g transform="translate(84, 116)" class="key keypos-13">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">A</text>
+</g>
+<g transform="translate(140, 91)" class="key keypos-14">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">R</text>
+</g>
+<g transform="translate(196, 84)" class="key keypos-15">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">S</text>
+</g>
+<g transform="translate(252, 91)" class="key keypos-16">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">T</text>
+</g>
+<g transform="translate(308, 91)" class="key keypos-17">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">D</text>
+</g>
+<g transform="translate(532, 91)" class="key keypos-18">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">H</text>
+</g>
+<g transform="translate(588, 91)" class="key keypos-19">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">N</text>
+</g>
+<g transform="translate(644, 84)" class="key keypos-20">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">E</text>
+</g>
+<g transform="translate(700, 91)" class="key keypos-21">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">I</text>
+</g>
+<g transform="translate(756, 116)" class="key keypos-22">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">O</text>
+</g>
+<g transform="translate(812, 116)" class="key keypos-23">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-4.5" class="dual-line" text-anchor="middle">&quot;</text>
+<text x="0" y="16.5" class="dual-line" text-anchor="middle">'</text>
+</g>
+</g>
+<g transform="translate(28, 172)" class="key keypos-24">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Ctrl</text>
+</g>
+<g transform="translate(84, 172)" class="key keypos-25">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Z</text>
+</g>
+<g transform="translate(140, 147)" class="key keypos-26">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">X</text>
+</g>
+<g transform="translate(196, 140)" class="key keypos-27">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">C</text>
+</g>
+<g transform="translate(252, 147)" class="key keypos-28">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">V</text>
+</g>
+<g transform="translate(308, 147)" class="key keypos-29">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">B</text>
+</g>
+<g transform="translate(532, 147)" class="key keypos-30">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">K</text>
+</g>
+<g transform="translate(588, 147)" class="key keypos-31">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">M</text>
+</g>
+<g transform="translate(644, 140)" class="key keypos-32">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-5.75" class="dual-line" text-anchor="middle">&lt;</text>
+<text x="0" y="7.75" class="dual-line" text-anchor="middle">,</text>
+</g>
+</g>
+<g transform="translate(700, 147)" class="key keypos-33">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-5.75" class="dual-line" text-anchor="middle">&gt;</text>
+<text x="0" y="7.75" class="dual-line" text-anchor="middle">.</text>
+</g>
+</g>
+<g transform="translate(756, 172)" class="key keypos-34">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-9.5" class="dual-line" text-anchor="middle">?</text>
+<text x="0" y="11.5" class="dual-line" text-anchor="middle">/</text>
+</g>
+</g>
+<g transform="translate(812, 172)" class="key keypos-35">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">⌘</text>
+</g>
+<g transform="translate(223, 203)" class="key keypos-36">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="stacked-key">
+<text x="0" y="9" class="stacked-line2" text-anchor="middle">RUS</text>
+<text x="-6" y="-7" class="stacked-line1" text-anchor="start">☇Alt</text>
+</g></g>
+<g transform="translate(285, 211) rotate(15.0)" class="key keypos-37">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.146484) translate(-61.44, -58.595)">
+<path d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,116.73a3.2,3.2,0,0,1-4.76-3.46h0l8.92-39L1.09,47.92A3.2,3.2,0,0,1,3,42.32l39.74-3.56L58.49,2a3.2,3.2,0,0,1,5.9,0Z" style="fill: #82C4F9" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+<g transform="translate(342, 235) rotate(30.0)" class="key keypos-38">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-2" class="dual-line1" text-anchor="middle">Space</text>
+<text x="0" y="4" class="dual-line2" style="font-size: 27px" text-anchor="middle">&#x2423;</text>
+</g>
+</g>
+<g transform="translate(498, 235) rotate(-30.0)" class="key keypos-39">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-4" class="dual-line1" text-anchor="middle">Enter</text>
+<text x="0" y="12" class="dual-line2" text-anchor="middle">&#x21B5;</text>
+</g>
+</g>
+<g transform="translate(555, 211) rotate(-15.0)" class="key keypos-40">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.146484) translate(-61.44, -58.595)">
+<path d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,116.73a3.2,3.2,0,0,1-4.76-3.46h0l8.92-39L1.09,47.92A3.2,3.2,0,0,1,3,42.32l39.74-3.56L58.49,2a3.2,3.2,0,0,1,5.9,0Z" style="fill: #E582F9" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+</g>
+</g>
+<g transform="translate(30, 329)" class="layer-Russian">
+<text x="0" y="28" class="label" id="Russian">Russian</text>
+<g transform="translate(0, 56)">
+<g transform="translate(28, 60)" class="key keypos-0">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Tab</text>
+</g>
+<g transform="translate(84, 60)" class="key keypos-1">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Й</text>
+</g>
+<g transform="translate(140, 35)" class="key keypos-2">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Ц</text>
+</g>
+<g transform="translate(196, 28)" class="key keypos-3">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">У</text>
+</g>
+<g transform="translate(252, 35)" class="key keypos-4">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">К</text>
+</g>
+<g transform="translate(308, 35)" class="key keypos-5">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="stacked-key">
+<text x="10" y="9" class="stacked-line2" text-anchor="middle">Е</text>
+<text x="-6" y="-7" class="stacked-line1" text-anchor="start">☇Ё</text>
+</g></g>
+<g transform="translate(532, 35)" class="key keypos-6">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Н</text>
+</g>
+<g transform="translate(588, 35)" class="key keypos-7">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Г</text>
+</g>
+<g transform="translate(644, 28)" class="key keypos-8">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="stacked-key">
+<text x="10" y="9" class="stacked-line2" text-anchor="middle">Ш</text>
+<text x="-6" y="-7" class="stacked-line1" text-anchor="start">☇Щ</text>
+</g></g>
+<g transform="translate(700, 35)" class="key keypos-9">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">З</text>
+</g>
+<g transform="translate(756, 60)" class="key keypos-10">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Х</text>
+</g>
+<g transform="translate(812, 60)" class="key keypos-11">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="stacked-key">
+<text x="0" y="9" class="stacked-line2" text-anchor="middle">Esc</text>
+<g transform="translate(-11, -7)">
+<text x="0" y="0" class="stacked-line1" text-anchor="start" dominant-baseline="central">☇</text>
+<g transform="translate(10, -2.5)">
+<g class="inline-icon">
+<g transform="scale(0.097656) translate(-61.44, -58.595)">
+<path d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,116.73a3.2,3.2,0,0,1-4.76-3.46h0l8.92-39L1.09,47.92A3.2,3.2,0,0,1,3,42.32l39.74-3.56L58.49,2a3.2,3.2,0,0,1,5.9,0Z" style="fill: #F9D382" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g>
+</g>
+</g></g>
+<g transform="translate(28, 116)" class="key keypos-12">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Shift</text>
+</g>
+<g transform="translate(84, 116)" class="key keypos-13">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Ф</text>
+</g>
+<g transform="translate(140, 91)" class="key keypos-14">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Ы</text>
+</g>
+<g transform="translate(196, 84)" class="key keypos-15">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">В</text>
+</g>
+<g transform="translate(252, 91)" class="key keypos-16">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">А</text>
+</g>
+<g transform="translate(308, 91)" class="key keypos-17">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">П</text>
+</g>
+<g transform="translate(532, 91)" class="key keypos-18">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Р</text>
+</g>
+<g transform="translate(588, 91)" class="key keypos-19">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">О</text>
+</g>
+<g transform="translate(644, 84)" class="key keypos-20">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Л</text>
+</g>
+<g transform="translate(700, 91)" class="key keypos-21">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Д</text>
+</g>
+<g transform="translate(756, 116)" class="key keypos-22">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Ж</text>
+</g>
+<g transform="translate(812, 116)" class="key keypos-23">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Э</text>
+</g>
+<g transform="translate(28, 172)" class="key keypos-24">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Ctrl</text>
+</g>
+<g transform="translate(84, 172)" class="key keypos-25">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Я</text>
+</g>
+<g transform="translate(140, 147)" class="key keypos-26">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Ч</text>
+</g>
+<g transform="translate(196, 140)" class="key keypos-27">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">С</text>
+</g>
+<g transform="translate(252, 147)" class="key keypos-28">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">М</text>
+</g>
+<g transform="translate(308, 147)" class="key keypos-29">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">И</text>
+</g>
+<g transform="translate(532, 147)" class="key keypos-30">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Т</text>
+</g>
+<g transform="translate(588, 147)" class="key keypos-31">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="stacked-key">
+<text x="10" y="9" class="stacked-line2" text-anchor="middle">Ь</text>
+<text x="-6" y="-7" class="stacked-line1" text-anchor="start">☇Ъ</text>
+</g></g>
+<g transform="translate(644, 140)" class="key keypos-32">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Б</text>
+</g>
+<g transform="translate(700, 147)" class="key keypos-33">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Ю</text>
+</g>
+<g transform="translate(756, 172)" class="key keypos-34">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-11.25" class="dual-line" text-anchor="middle">,</text>
+<text x="0" y="5.25" class="dual-line" text-anchor="middle">.</text>
+</g>
+</g>
+<g transform="translate(812, 172)" class="key keypos-35">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">⌘</text>
+</g>
+<g transform="translate(223, 203)" class="key keypos-36">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="stacked-key">
+<text x="0" y="9" class="stacked-line2" text-anchor="middle">ENG</text>
+<text x="-6" y="-7" class="stacked-line1" text-anchor="start">☇Alt</text>
+</g></g>
+<g transform="translate(285, 211) rotate(15.0)" class="key keypos-37">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.146484) translate(-61.44, -58.595)">
+<path d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,116.73a3.2,3.2,0,0,1-4.76-3.46h0l8.92-39L1.09,47.92A3.2,3.2,0,0,1,3,42.32l39.74-3.56L58.49,2a3.2,3.2,0,0,1,5.9,0Z" style="fill: #82C4F9" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+<g transform="translate(342, 235) rotate(30.0)" class="key keypos-38">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-2" class="dual-line1" text-anchor="middle">Space</text>
+<text x="0" y="4" class="dual-line2" style="font-size: 27px" text-anchor="middle">&#x2423;</text>
+</g>
+</g>
+<g transform="translate(498, 235) rotate(-30.0)" class="key keypos-39">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-4" class="dual-line1" text-anchor="middle">Enter</text>
+<text x="0" y="12" class="dual-line2" text-anchor="middle">&#x21B5;</text>
+</g>
+</g>
+<g transform="translate(555, 211) rotate(-15.0)" class="key keypos-40">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.146484) translate(-61.44, -58.595)">
+<path d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,116.73a3.2,3.2,0,0,1-4.76-3.46h0l8.92-39L1.09,47.92A3.2,3.2,0,0,1,3,42.32l39.74-3.56L58.49,2a3.2,3.2,0,0,1,5.9,0Z" style="fill: #E582F9" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+</g>
+</g>
+<g transform="translate(30, 659)" class="layer-Lower">
+<text x="0" y="28" class="label" id="Lower">Lower</text>
+<g transform="translate(0, 56)">
+<g transform="translate(28, 60)" class="key keypos-0">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Tab</text>
+</g>
+<g transform="translate(84, 60)" class="key keypos-1">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Pscr</text>
+</g>
+<g transform="translate(140, 35)" class="key keypos-2">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Del</text>
+</g>
+<g transform="translate(196, 28)" class="key keypos-3">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.395349) translate(-21.5, -13.5)">
+<path d="M4.99375 26.2438L21.25 10.0229L37.5063 26.2438L42.5 21.25L21.25 0L0 21.25L4.99375 26.2438Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+<g transform="translate(252, 35)" class="key keypos-4">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">⌫</text>
+</g>
+<g transform="translate(308, 35)" class="key keypos-5">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">PgUp</text>
+</g>
+<g transform="translate(532, 35)" class="key keypos-6">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">*</text>
+</g>
+<g transform="translate(588, 35)" class="key keypos-7">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">7</text>
+</g>
+<g transform="translate(644, 28)" class="key keypos-8">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">8</text>
+</g>
+<g transform="translate(700, 35)" class="key keypos-9">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">9</text>
+</g>
+<g transform="translate(756, 60)" class="key keypos-10">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">/</text>
+</g>
+<g transform="translate(812, 60)" class="key keypos-11">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Esc</text>
+</g>
+<g transform="translate(28, 116)" class="key keypos-12">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Shift</text>
+</g>
+<g transform="translate(84, 116)" class="key keypos-13">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Home</text>
+</g>
+<g transform="translate(140, 91)" class="key keypos-14">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.395349) translate(-13.5, -21.5)">
+<path d="M26.2438 37.5063L10.0229 21.25L26.2438 4.99375L21.25 0L0 21.25L21.25 42.5L26.2438 37.5063Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+<g transform="translate(196, 84)" class="key keypos-15">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.395349) translate(-21.5, -13.5)">
+<path d="M4.99375 0L21.25 16.2208L37.5063 0L42.5 4.99375L21.25 26.2438L0 4.99375L4.99375 0Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+<g transform="translate(252, 91)" class="key keypos-16">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.395349) translate(-13.5, -21.5)">
+<path d="M0 37.5063L16.2208 21.25L0 4.99375L4.99375 0L26.2438 21.25L4.99375 42.5L0 37.5063Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+<g transform="translate(308, 91)" class="key keypos-17">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">End</text>
+</g>
+<g transform="translate(532, 91)" class="key keypos-18">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">+</text>
+</g>
+<g transform="translate(588, 91)" class="key keypos-19">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">4</text>
+</g>
+<g transform="translate(644, 84)" class="key keypos-20">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">5</text>
+</g>
+<g transform="translate(700, 91)" class="key keypos-21">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">6</text>
+</g>
+<g transform="translate(756, 116)" class="key keypos-22">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">-</text>
+</g>
+<g transform="translate(812, 116)" class="key keypos-23">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(28, 172)" class="key keypos-24">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Ctrl</text>
+</g>
+<g transform="translate(84, 172)" class="key keypos-25">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(140, 147)" class="key keypos-26">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.298246) translate(-24, -28.5)">
+<path d="M47.8125 28.3333C47.8125 22.0646 44.2 16.6812 38.9583 14.0604V42.5708C44.2 39.9854 47.8125 34.6021 47.8125 28.3333ZM0 17.7083V38.9583H14.1667L31.875 56.6667V0L14.1667 17.7083H0Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+<g transform="translate(196, 140)" class="key keypos-27">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.265625) translate(-32, -32)">
+<path d="M47.8125 31.875C47.8125 25.6063 44.2 20.2229 38.9583 17.6021V25.4292L47.6354 34.1063C47.7417 33.3979 47.8125 32.6542 47.8125 31.875ZM56.6667 31.875C56.6667 35.2042 55.9583 38.3208 54.7542 41.225L60.1021 46.5729C62.4396 42.1812 63.75 37.1875 63.75 31.875C63.75 16.7167 53.1604 4.0375 38.9583 0.814583V8.11042C49.1938 11.1563 56.6667 20.6479 56.6667 31.875ZM4.49792 0L0 4.49792L16.7521 21.25H0V42.5H14.1667L31.875 60.2083V36.3729L46.9271 51.425C44.5542 53.2667 41.8979 54.7188 38.9583 55.6042V62.9C43.8458 61.8021 48.2729 59.5354 52.0271 56.4896L59.2521 63.75L63.75 59.2521L4.49792 0ZM31.875 3.54167L24.4729 10.9438L31.875 18.3458V3.54167Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+<g transform="translate(252, 147)" class="key keypos-28">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.265625) translate(-32, -31.5)">
+<path d="M0 20.4354V41.6854H14.1667L31.875 59.3938V2.72708L14.1667 20.4354H0ZM47.8125 31.0604C47.8125 24.7917 44.2 19.4083 38.9583 16.7875V45.2979C44.2 42.7125 47.8125 37.3292 47.8125 31.0604ZM38.9583 0V7.29583C49.1938 10.3417 56.6667 19.8333 56.6667 31.0604C56.6667 42.2875 49.1938 51.7792 38.9583 54.825V62.1208C53.1604 58.8979 63.75 46.2188 63.75 31.0604C63.75 15.9021 53.1604 3.22292 38.9583 0Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+<g transform="translate(308, 147)" class="key keypos-29">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">PgDn</text>
+</g>
+<g transform="translate(532, 147)" class="key keypos-30">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">0</text>
+</g>
+<g transform="translate(588, 147)" class="key keypos-31">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">1</text>
+</g>
+<g transform="translate(644, 140)" class="key keypos-32">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">2</text>
+</g>
+<g transform="translate(700, 147)" class="key keypos-33">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">3</text>
+</g>
+<g transform="translate(756, 172)" class="key keypos-34">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">.</text>
+</g>
+<g transform="translate(812, 172)" class="key keypos-35">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(223, 203)" class="key keypos-36">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Alt</text>
+</g>
+<g transform="translate(285, 211) rotate(15.0)" class="key keypos-37">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(342, 235) rotate(30.0)" class="key keypos-38">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-2" class="dual-line1" text-anchor="middle">Space</text>
+<text x="0" y="4" class="dual-line2" style="font-size: 27px" text-anchor="middle">&#x2423;</text>
+</g>
+</g>
+<g transform="translate(498, 235) rotate(-30.0)" class="key keypos-39">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-4" class="dual-line1" text-anchor="middle">Enter</text>
+<text x="0" y="12" class="dual-line2" text-anchor="middle">&#x21B5;</text>
+</g>
+</g>
+<g transform="translate(555, 211) rotate(-15.0)" class="key keypos-40">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-lower)" filter="url(#key-inner-shadow)"/>
+</g>
+</g>
+</g>
+<g transform="translate(30, 988)" class="layer-Raise">
+<text x="0" y="28" class="label" id="Raise">Raise</text>
+<g transform="translate(0, 56)">
+<g transform="translate(28, 60)" class="key keypos-0">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Tab</text>
+</g>
+<g transform="translate(84, 60)" class="key keypos-1">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">!</text>
+</g>
+<g transform="translate(140, 35)" class="key keypos-2">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">@</text>
+</g>
+<g transform="translate(196, 28)" class="key keypos-3">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">#</text>
+</g>
+<g transform="translate(252, 35)" class="key keypos-4">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">$</text>
+</g>
+<g transform="translate(308, 35)" class="key keypos-5">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">%</text>
+</g>
+<g transform="translate(532, 35)" class="key keypos-6">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">^</text>
+</g>
+<g transform="translate(588, 35)" class="key keypos-7">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">&amp;</text>
+</g>
+<g transform="translate(644, 28)" class="key keypos-8">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">*</text>
+</g>
+<g transform="translate(700, 35)" class="key keypos-9">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">(</text>
+</g>
+<g transform="translate(756, 60)" class="key keypos-10">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">)</text>
+</g>
+<g transform="translate(812, 60)" class="key keypos-11">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Esc</text>
+</g>
+<g transform="translate(28, 116)" class="key keypos-12">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Shift</text>
+</g>
+<g transform="translate(84, 116)" class="key keypos-13">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(140, 91)" class="key keypos-14">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(196, 84)" class="key keypos-15">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(252, 91)" class="key keypos-16">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(308, 91)" class="key keypos-17">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(532, 91)" class="key keypos-18">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">-</text>
+</g>
+<g transform="translate(588, 91)" class="key keypos-19">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">=</text>
+</g>
+<g transform="translate(644, 84)" class="key keypos-20">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">[</text>
+</g>
+<g transform="translate(700, 91)" class="key keypos-21">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">]</text>
+</g>
+<g transform="translate(756, 116)" class="key keypos-22">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">\</text>
+</g>
+<g transform="translate(812, 116)" class="key keypos-23">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">`</text>
+</g>
+<g transform="translate(28, 172)" class="key keypos-24">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Ctrl</text>
+</g>
+<g transform="translate(84, 172)" class="key keypos-25">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(140, 147)" class="key keypos-26">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(196, 140)" class="key keypos-27">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(252, 147)" class="key keypos-28">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(308, 147)" class="key keypos-29">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(532, 147)" class="key keypos-30">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">_</text>
+</g>
+<g transform="translate(588, 147)" class="key keypos-31">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">+</text>
+</g>
+<g transform="translate(644, 140)" class="key keypos-32">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">{</text>
+</g>
+<g transform="translate(700, 147)" class="key keypos-33">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">}</text>
+</g>
+<g transform="translate(756, 172)" class="key keypos-34">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">|</text>
+</g>
+<g transform="translate(812, 172)" class="key keypos-35">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">~</text>
+</g>
+<g transform="translate(223, 203)" class="key keypos-36">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Alt</text>
+</g>
+<g transform="translate(285, 211) rotate(15.0)" class="key keypos-37">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(342, 235) rotate(30.0)" class="key keypos-38">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-2" class="dual-line1" text-anchor="middle">Space</text>
+<text x="0" y="4" class="dual-line2" style="font-size: 27px" text-anchor="middle">&#x2423;</text>
+</g>
+</g>
+<g transform="translate(498, 235) rotate(-30.0)" class="key keypos-39">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+<g class="dual-key">
+<text x="0" y="-4" class="dual-line1" text-anchor="middle">Enter</text>
+<text x="0" y="12" class="dual-line2" text-anchor="middle">&#x21B5;</text>
+</g>
+</g>
+<g transform="translate(555, 211) rotate(-15.0)" class="key keypos-40">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-raise)" filter="url(#key-inner-shadow)"/>
+</g>
+</g>
+</g>
+<g transform="translate(30, 1317)" class="layer-Fn">
+<text x="0" y="28" class="label" id="Fn">Fn</text>
+<g transform="translate(0, 56)">
+<g transform="translate(28, 60)" class="key keypos-0">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(84, 60)" class="key keypos-1">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(140, 35)" class="key keypos-2">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(196, 28)" class="key keypos-3">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(252, 35)" class="key keypos-4">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(308, 35)" class="key keypos-5">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(532, 35)" class="key keypos-6">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F12</text>
+</g>
+<g transform="translate(588, 35)" class="key keypos-7">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F7</text>
+</g>
+<g transform="translate(644, 28)" class="key keypos-8">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F8</text>
+</g>
+<g transform="translate(700, 35)" class="key keypos-9">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F9</text>
+</g>
+<g transform="translate(756, 60)" class="key keypos-10">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(812, 60)" class="key keypos-11">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(28, 116)" class="key keypos-12">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon">
+<g class="inline-icon">
+<g transform="scale(0.247059) translate(-42.5, -42.5)">
+<path d="M46.0416 20.648L52.7 27.3063L47.0333 32.973L52.027 37.9667L62.7229 27.2709L42.5 7.08337H38.9583V24.898L46.0416 31.9813V20.648ZM19.1604 14.1667L14.1666 19.1605L37.5062 42.5L17.7083 62.298L22.702 67.2917L38.9583 51.0355V77.9167H42.5L57.6937 62.723L65.8395 70.8334L70.8333 65.8396L19.1604 14.1667ZM46.0416 64.3521V51.0355L52.7 57.6938L46.0416 64.3521Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g></g>
+<g transform="translate(84, 116)" class="key keypos-13">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon-combo">
+<g transform="translate(-6.75, 0)">
+<g class="inline-icon">
+<g transform="scale(0.247059) translate(-42.5, -42.5)">
+<path d="M65.0073 27.3062L44.7843 7.08331H41.2427V33.9646L24.9864 17.7083L19.9927 22.7021L39.7906 42.5L19.9927 62.2979L24.9864 67.2916L41.2427 51.0354V77.9166H44.7843L65.0073 57.6937L49.7781 42.5L65.0073 27.3062ZM48.326 20.6479L54.9843 27.3062L48.326 33.9646V20.6479ZM54.9843 57.6937L48.326 64.3521V51.0354L54.9843 57.6937Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g>
+<text x="6.75" y="1" class="key tap" text-anchor="middle" dominant-baseline="central">0</text>
+</g></g>
+<g transform="translate(140, 91)" class="key keypos-14">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon-combo">
+<g transform="translate(-6.75, 0)">
+<g class="inline-icon">
+<g transform="scale(0.247059) translate(-42.5, -42.5)">
+<path d="M65.0073 27.3062L44.7843 7.08331H41.2427V33.9646L24.9864 17.7083L19.9927 22.7021L39.7906 42.5L19.9927 62.2979L24.9864 67.2916L41.2427 51.0354V77.9166H44.7843L65.0073 57.6937L49.7781 42.5L65.0073 27.3062ZM48.326 20.6479L54.9843 27.3062L48.326 33.9646V20.6479ZM54.9843 57.6937L48.326 64.3521V51.0354L54.9843 57.6937Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g>
+<text x="6.75" y="1" class="key tap" text-anchor="middle" dominant-baseline="central">1</text>
+</g></g>
+<g transform="translate(196, 84)" class="key keypos-15">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon-combo">
+<g transform="translate(-6.75, 0)">
+<g class="inline-icon">
+<g transform="scale(0.247059) translate(-42.5, -42.5)">
+<path d="M65.0073 27.3062L44.7843 7.08331H41.2427V33.9646L24.9864 17.7083L19.9927 22.7021L39.7906 42.5L19.9927 62.2979L24.9864 67.2916L41.2427 51.0354V77.9166H44.7843L65.0073 57.6937L49.7781 42.5L65.0073 27.3062ZM48.326 20.6479L54.9843 27.3062L48.326 33.9646V20.6479ZM54.9843 57.6937L48.326 64.3521V51.0354L54.9843 57.6937Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g>
+<text x="6.75" y="1" class="key tap" text-anchor="middle" dominant-baseline="central">2</text>
+</g></g>
+<g transform="translate(252, 91)" class="key keypos-16">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon-combo">
+<g transform="translate(-6.75, 0)">
+<g class="inline-icon">
+<g transform="scale(0.247059) translate(-42.5, -42.5)">
+<path d="M65.0073 27.3062L44.7843 7.08331H41.2427V33.9646L24.9864 17.7083L19.9927 22.7021L39.7906 42.5L19.9927 62.2979L24.9864 67.2916L41.2427 51.0354V77.9166H44.7843L65.0073 57.6937L49.7781 42.5L65.0073 27.3062ZM48.326 20.6479L54.9843 27.3062L48.326 33.9646V20.6479ZM54.9843 57.6937L48.326 64.3521V51.0354L54.9843 57.6937Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g>
+<text x="6.75" y="1" class="key tap" text-anchor="middle" dominant-baseline="central">3</text>
+</g></g>
+<g transform="translate(308, 91)" class="key keypos-17">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<g class="key-icon-combo">
+<g transform="translate(-6.75, 0)">
+<g class="inline-icon">
+<g transform="scale(0.247059) translate(-42.5, -42.5)">
+<path d="M65.0073 27.3062L44.7843 7.08331H41.2427V33.9646L24.9864 17.7083L19.9927 22.7021L39.7906 42.5L19.9927 62.2979L24.9864 67.2916L41.2427 51.0354V77.9166H44.7843L65.0073 57.6937L49.7781 42.5L65.0073 27.3062ZM48.326 20.6479L54.9843 27.3062L48.326 33.9646V20.6479ZM54.9843 57.6937L48.326 64.3521V51.0354L54.9843 57.6937Z" style="fill: #FFFFFF" vector-effect="non-scaling-stroke" stroke="url(#text-stroke)" stroke-opacity="0.25" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1" paint-order="stroke fill"/>
+</g>
+</g>
+</g>
+<text x="6.75" y="1" class="key tap" text-anchor="middle" dominant-baseline="central">4</text>
+</g></g>
+<g transform="translate(532, 91)" class="key keypos-18">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F11</text>
+</g>
+<g transform="translate(588, 91)" class="key keypos-19">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F4</text>
+</g>
+<g transform="translate(644, 84)" class="key keypos-20">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F5</text>
+</g>
+<g transform="translate(700, 91)" class="key keypos-21">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F6</text>
+</g>
+<g transform="translate(756, 116)" class="key keypos-22">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(812, 116)" class="key keypos-23">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(28, 172)" class="key keypos-24">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(84, 172)" class="key keypos-25">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(140, 147)" class="key keypos-26">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(196, 140)" class="key keypos-27">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(252, 147)" class="key keypos-28">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(308, 147)" class="key keypos-29">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(532, 147)" class="key keypos-30">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F10</text>
+</g>
+<g transform="translate(588, 147)" class="key keypos-31">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F1</text>
+</g>
+<g transform="translate(644, 140)" class="key keypos-32">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F2</text>
+</g>
+<g transform="translate(700, 147)" class="key keypos-33">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">F3</text>
+</g>
+<g transform="translate(756, 172)" class="key keypos-34">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(812, 172)" class="key keypos-35">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(223, 203)" class="key keypos-36">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(285, 211) rotate(15.0)" class="key keypos-37">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(342, 235) rotate(30.0)" class="key keypos-38">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(498, 235) rotate(-30.0)" class="key keypos-39">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(555, 211) rotate(-15.0)" class="key keypos-40">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill-fn)" filter="url(#key-inner-shadow)"/>
+</g>
+</g>
+</g>
+<g transform="translate(30, 1646)" class="layer-Mouse">
+<text x="0" y="28" class="label" id="Mouse">Mouse</text>
+<g transform="translate(0, 56)">
+<g transform="translate(28, 60)" class="key keypos-0">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(84, 60)" class="key keypos-1">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(140, 35)" class="key keypos-2">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(196, 28)" class="key keypos-3">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(252, 35)" class="key keypos-4">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(308, 35)" class="key keypos-5">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(532, 35)" class="key keypos-6">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(588, 35)" class="key keypos-7">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(644, 28)" class="key keypos-8">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">M3</text>
+</g>
+<g transform="translate(700, 35)" class="key keypos-9">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(756, 60)" class="key keypos-10">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(812, 60)" class="key keypos-11">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(28, 116)" class="key keypos-12">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(84, 116)" class="key keypos-13">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(140, 91)" class="key keypos-14">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(196, 84)" class="key keypos-15">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(252, 91)" class="key keypos-16">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(308, 91)" class="key keypos-17">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(532, 91)" class="key keypos-18">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Screen</text>
+</g>
+<g transform="translate(588, 91)" class="key keypos-19">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">M1</text>
+</g>
+<g transform="translate(644, 84)" class="key keypos-20">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Scroll</text>
+</g>
+<g transform="translate(700, 91)" class="key keypos-21">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">M2</text>
+</g>
+<g transform="translate(756, 116)" class="key keypos-22">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">MSh</text>
+</g>
+<g transform="translate(812, 116)" class="key keypos-23">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(28, 172)" class="key keypos-24">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(84, 172)" class="key keypos-25">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(140, 147)" class="key keypos-26">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(196, 140)" class="key keypos-27">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(252, 147)" class="key keypos-28">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(308, 147)" class="key keypos-29">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(532, 147)" class="key keypos-30">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(588, 147)" class="key keypos-31">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">M4</text>
+</g>
+<g transform="translate(644, 140)" class="key keypos-32">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">M5</text>
+</g>
+<g transform="translate(700, 147)" class="key keypos-33">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(756, 172)" class="key keypos-34">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(812, 172)" class="key keypos-35">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(223, 203)" class="key keypos-36">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+<text x="0" y="1" class="key tap">Alt</text>
+</g>
+<g transform="translate(285, 211) rotate(15.0)" class="key keypos-37">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(342, 235) rotate(30.0)" class="key keypos-38">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(498, 235) rotate(-30.0)" class="key keypos-39">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+<g transform="translate(555, 211) rotate(-15.0)" class="key keypos-40">
+<rect rx="9" ry="9" x="-26" y="-26" width="52" height="52" class="key-base" filter="url(#key-base-inner-shadow)"/>
+<rect rx="12" ry="12" x="-24" y="-24" width="48" height="48" class="key key-top" fill="url(#key-fill)" filter="url(#key-inner-shadow)"/>
+</g>
+</g>
+</g>
+</svg>
