@@ -1,0 +1,28 @@
+config ZMK_LANG_SWITCH_FREEZE
+    bool "Freeze input during OS language switch (Lower/Raise)"
+    default y
+
+config ZMK_LANG_SWITCH_LOWER_POS
+    int "Key position for &mo LOWER thumb key"
+    default 37
+    depends on ZMK_LANG_SWITCH_FREEZE
+
+config ZMK_LANG_SWITCH_RAISE_POS
+    int "Key position for &mo RAISE thumb key"
+    default 40
+    depends on ZMK_LANG_SWITCH_FREEZE
+
+config ZMK_LANG_SWITCH_RUSSIAN_LAYER
+    int "ZMK layer index for Russian (restore OS lang on release)"
+    default 1
+    depends on ZMK_LANG_SWITCH_FREEZE
+
+config ZMK_LANG_SWITCH_COMBO_MS
+    int "Time for Alt+Shift+N HID sequence (ms)"
+    default 35
+    depends on ZMK_LANG_SWITCH_FREEZE
+
+config ZMK_LANG_SWITCH_FREEZE_MS
+    int "Drop input after layer key press (ms)"
+    default 50
+    depends on ZMK_LANG_SWITCH_FREEZE
