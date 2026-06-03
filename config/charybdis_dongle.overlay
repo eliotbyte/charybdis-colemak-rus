@@ -1,25 +1,95 @@
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
 #include <input/processors.dtsi>
+
 #include <dt-bindings/zmk/input_transform.h>
 
+#include <behaviors/input_gestures_accel.dtsi>
+
+#include <scroll-snap.dtsi>
+
+
+
 / {
+
     /delete-node/ auto_mouse_layer;
+
 };
+
+
+
+/* Dynamic speed kept. No track-remainders = no post-stop glide. */
+
+&pointer_accel {
+
+    input-type = <INPUT_EV_REL>;
+
+    min-factor = <420>;
+
+    max-factor = <1800>;
+
+    speed-threshold = <1400>;
+
+    speed-max = <6500>;
+
+    acceleration-exponent = <1>;
+
+};
+
+
+
+/* Snap on REL_X/Y before scroll mapper (trackball). README defaults, PMW-tuned. */
+
+&zip_cursor_snap_8way {
+
+    require-n-samples = <3>;
+
+    immediate-snap-threshold = <120>;
+
+    lock-duration-ms = <200>;
+
+    lock-for-next-n-events = <16>;
+
+    idle-reset-timeout-ms = <150>;
+
+};
+
+
 
 &trackball_listener {
+
     /delete-node/ move;
 
-    input-processors = <&zip_xy_scaler 6 5>;
+    /delete-node/ slow_pointer;
 
-    slow_pointer {
-        layers = <7>;
-        input-processors = <&zip_xy_scaler 3 5>;
-    };
+    /* split_input_common scroll@layer6 wins first — no snap; must delete */
+
+    /delete-node/ scroll;
+
+
+
+    input-processors = <&pointer_accel>;
+
+
 
     scroller {
+
         layers = <6>;
-        input-processors = <&zip_xy_to_scroll_mapper
+
+        input-processors = <
+
+            &zip_cursor_snap_8way
+
+            &zip_xy_to_scroll_mapper
+
             &zip_scroll_scaler 30 48
+
             &zip_scroll_transform (INPUT_TRANSFORM_Y_INVERT)
+
         >;
+
     };
+
 };
+
+

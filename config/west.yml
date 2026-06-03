@@ -6,6 +6,10 @@ manifest:
       url-base: https://github.com/badjeff
     - name: carrefinho
       url-base: https://github.com/carrefinho
+    - name: oleksandrmaslov
+      url-base: https://github.com/oleksandrmaslov
+    - name: kot149
+      url-base: https://github.com/kot149
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -17,5 +21,11 @@ manifest:
     - name: prospector-zmk-module
       remote: carrefinho
       revision: feat/new-status-screens
+    - name: zmk-pointing-acceleration
+      remote: oleksandrmaslov
+      revision: main
+    - name: zmk-scroll-snap
+      remote: kot149
+      revision: v1
   self:
     path: config

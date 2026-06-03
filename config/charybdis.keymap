@@ -11,10 +11,9 @@
 #define RAISE 4
 #define FUNCTION 5
 #define SCROLL 6
-#define MOUSE_SHIFT 7
-#define SCROLL_SHIFT 8
-#define SCREEN 9
-#define RESET 10
+#define SCROLL_SHIFT 7
+#define SCREEN 8
+#define RESET 9
 
 #define MOVE_BASE (ZMK_POINTING_DEFAULT_MOVE_VAL)
 #define SCROLL_BASE (ZMK_POINTING_DEFAULT_SCRL_VAL * 16)
@@ -88,7 +87,7 @@
       display-name = "Mouse";
       bindings = <
         &trans  &trans  &trans  &trans  &trans  &trans     &trans  &trans   &mkp MB3  &trans   &trans  &trans
-        &trans  &trans  &trans  &trans  &trans  &trans     &mo SCREEN  &mkp MB1  &mo SCROLL  &mkp MB2  &mo MOUSE_SHIFT  &trans
+        &trans  &trans  &trans  &trans  &trans  &trans     &mo SCREEN  &mkp MB1  &mo SCROLL  &mkp MB2  &trans  &trans
         &trans  &trans  &trans  &trans  &trans  &trans     &trans  &mkp MB4  &mkp MB5  &trans   &trans  &trans
                         &kp LALT  &trans  &trans     &trans  &trans
       >;
@@ -131,16 +130,6 @@
         &none  &none  &msc MOVE_X(-SCROLL_BASE) &msc MOVE_Y(-SCROLL_BASE) &msc MOVE_X(SCROLL_BASE) &none  &none  &mkp MB1  &none  &mkp MB2  &none  &none
         &none  &none  &none  &none  &none  &none     &none  &mkp MB4  &mkp MB5  &none  &none  &none
                         &none  &none  &none     &none  &mo SCROLL_SHIFT
-      >;
-    };
-
-    MouseShift {
-      display-name = "Mouse Shift";
-      bindings = <
-        &none  &none  &none  &mmv MOVE_Y(-MOVE_BASE)   &none  &none     &none  &none   &mkp MB3  &none  &none  &none
-        &none  &none  &mmv MOVE_X(-MOVE_BASE) &mmv MOVE_Y(MOVE_BASE) &mmv MOVE_X(MOVE_BASE) &none  &none  &mkp MB1  &mo SCROLL  &mkp MB2  &none  &none
-        &none  &none  &none  &none  &none  &none     &none  &mkp MB4  &mkp MB5  &none  &none  &none
-                        &none  &none  &none     &none  &mo MOUSE_SHIFT
       >;
     };
 

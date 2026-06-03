@@ -8,8 +8,6 @@
 #define RAISE 4
 #define FUNCTION 5
 #define SCROLL 6
-#define MOUSE_SHIFT 7
-
 / {
   split_inputs {
     #address-cells = <1>;
@@ -29,11 +27,6 @@
     move {
       layers = <COLEMAK RUSSIAN>;
       input-processors = <&auto_mouse_layer MOUSE 1000>;
-    };
-
-    slow_pointer {
-      layers = <MOUSE_SHIFT>;
-      input-processors = <&zip_xy_scaler 1 3>;
     };
 
     scroll {
