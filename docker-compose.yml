@@ -1,6 +1,6 @@
 # Local firmware builds only. Requires Docker Desktop.
 #
-#   docker compose run --rm zmk-build
+#   docker compose run --rm zmk-build fast
 #   docker compose run --rm zmk-build verify
 #
 services:
@@ -11,5 +11,10 @@ services:
       - .:/work
     environment:
       ZMK_CONFIG: /work/config
+      SKIP_WEST_UPDATE: ${SKIP_WEST_UPDATE:-1}
+      SKIP_PRISTINE: ${SKIP_PRISTINE:-}
+      INCREMENTAL: ${INCREMENTAL:-}
+      PRISTINE: ${PRISTINE:-}
+      PARALLEL_HALVES: ${PARALLEL_HALVES:-}
     entrypoint: ["/bin/bash", "/work/scripts/docker-entrypoint.sh"]
-    command: ["firmware"]
+    command: ["fast"]
