@@ -99,7 +99,7 @@
       bindings = <
         &kp TAB    &kp PSCRN  &kp DEL  &kp UP  &kp BSPC  &kp PGUP     &hold AT HASH  &hold LBKT LPAR  &hold RBKT RPAR  &hold CARET EQUAL  &hold COLON SEMI  &kp ESCAPE
         &kp LSHFT  &kp HOME   &kp LEFT &kp DOWN &kp RIGHT &kp END      &hold ASTRK PLUS  &kp COMMA  &kp DOT  &hold DQT SQT  &hold UNDER MINUS  &hold TILDE GRAVE
-        &kp LCTRL  &none      &kp C_VOL_DN  &kp C_MUTE  &kp C_VOL_UP  &kp PGDN   &hold DLLR AMPS  &hold LT LBRC  &hold GT RBRC  &hold EXCL FSLH  &hold QMARK BSLH  &hold PRCNT PIPE
+        &kp LCTRL  &none      &kp C_VOL_DN  &kp C_MUTE  &kp C_VOL_UP  &kp PGDN   &hold DLLR AMPS  &hold LT LBRC  &hold GT RBRC  &hold EXCL BSLH  &hold QMARK FSLH  &hold PRCNT PIPE
                                 &kp LALT  &none  &kp SPACE  &kp RET  &none
       >;
     };
