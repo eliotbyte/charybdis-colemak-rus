@@ -6,8 +6,7 @@
 #define MOUSE 2
 #define LOWER 3
 #define RAISE 4
-#define FUNCTION 5
-#define SCROLL 6
+#define SCROLL 5
 / {
   split_inputs {
     #address-cells = <1>;

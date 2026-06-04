@@ -62,7 +62,7 @@
 
     /delete-node/ slow_pointer;
 
-    /* split_input_common scroll@layer6 wins first — no snap; must delete */
+    /* split_input_common scroll@layer5 wins first — no snap; must delete */
 
     /delete-node/ scroll;
 
@@ -74,7 +74,7 @@
 
     scroller {
 
-        layers = <6>;
+        layers = <5>;
 
         input-processors = <
 

@@ -1,14 +1,14 @@
 / {
   behaviors {
-    /* Russian layer: hold Ctrl → momentary CtrlColemak (10) + LCTRL; OS lang unchanged */
+    /* Russian layer: hold Ctrl → momentary CtrlColemak (9) + LCTRL; OS lang unchanged */
     ru_ctrl: ru_ctrl {
       compatible = "zmk,behavior-macro";
       label = "RU_CTRL";
       #binding-cells = <0>;
       bindings =
-        <&macro_press &mo 10 &kp LCTRL>
+        <&macro_press &mo 9 &kp LCTRL>
       , <&macro_pause_for_release>
-      , <&macro_release &kp LCTRL &mo 10>;
+      , <&macro_release &kp LCTRL &mo 9>;
     };
   };
 };

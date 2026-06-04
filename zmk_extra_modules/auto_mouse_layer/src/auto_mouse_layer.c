@@ -4,8 +4,14 @@
 #include <zmk/events/keycode_state_changed.h>
 #include <zmk/keymap.h>
 
-/* Must match the mouse_layer index in charybdis.keymap (0-based declaration order). */
+/* Must match layer indices in config/charybdis.keymap (0-based declaration order). */
 #define MOUSE_LAYER 2
+#define GAME_LAYER 10
+#define GAME_LOWER_LAYER 11
+
+static bool game_mode_active(void) {
+    return zmk_keymap_layer_active(GAME_LAYER) || zmk_keymap_layer_active(GAME_LOWER_LAYER);
+}
 
 static atomic_t mouse_active  = ATOMIC_INIT(0);
 static atomic_t keyboard_lock = ATOMIC_INIT(0);
@@ -24,6 +30,7 @@ static void keyboard_lock_fn(struct k_work *work) {
 }
 
 static void activate_mouse_fn(struct k_work *work) {
+    if (game_mode_active()) return;
     if (atomic_get(&keyboard_lock)) return;
     if (!atomic_get(&mouse_active)) {
         atomic_set(&mouse_active, 1);
@@ -43,6 +50,8 @@ INPUT_CALLBACK_DEFINE(NULL, trackball_input_cb, NULL);
 static int keycode_listener_cb(const zmk_event_t *eh) {
     const struct zmk_keycode_state_changed *ev = as_zmk_keycode_state_changed(eh);
     if (!ev || !ev->state) return ZMK_EV_EVENT_BUBBLE;
+
+    if (game_mode_active()) return ZMK_EV_EVENT_BUBBLE;
 
     if (atomic_get(&mouse_active)) {
         k_work_reschedule(&mouse_timeout_work, K_MSEC(CONFIG_ZMK_AUTO_MOUSE_TIMEOUT_MS));
