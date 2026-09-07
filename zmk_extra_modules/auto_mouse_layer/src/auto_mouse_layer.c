@@ -3,9 +3,10 @@
 #include <zmk/event_manager.h>
 #include <zmk/events/keycode_state_changed.h>
 #include <zmk/keymap.h>
+#include <zmk/keys.h>
 
 /* Must match layer indices in config/charybdis.keymap (0-based declaration order). */
-#define MOUSE_LAYER 2
+#define MOUSE_LAYER 3
 #define GAME_LAYER 10
 #define GAME_LOWER_LAYER 11
 
@@ -52,6 +53,11 @@ static int keycode_listener_cb(const zmk_event_t *eh) {
     if (!ev || !ev->state) return ZMK_EV_EVENT_BUBBLE;
 
     if (game_mode_active()) return ZMK_EV_EVENT_BUBBLE;
+
+    /* Holding Ctrl/Shift/etc. alone must not block trackball from raising Mouse. */
+    if (is_mod(ev->usage_page, ev->keycode)) {
+        return ZMK_EV_EVENT_BUBBLE;
+    }
 
     if (atomic_get(&mouse_active)) {
         k_work_reschedule(&mouse_timeout_work, K_MSEC(CONFIG_ZMK_AUTO_MOUSE_TIMEOUT_MS));

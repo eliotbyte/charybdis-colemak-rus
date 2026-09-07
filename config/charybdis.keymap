@@ -6,14 +6,14 @@
 
 #define COLEMAK 0
 #define RUSSIAN 1
-#define MOUSE 2
-#define LOWER 3
-#define RAISE 4
-#define SCROLL 5
-#define SCROLL_SHIFT 6
-#define SCREEN 7
-#define RESET 8
-#define CTRL_COLEMAK 9
+#define CTRL_COLEMAK 2
+#define MOUSE 3
+#define LOWER 4
+#define RAISE 5
+#define SCROLL 6
+#define SCROLL_SHIFT 7
+#define SCREEN 8
+#define RESET 9
 #define GAME 10
 #define GAME_LOWER 11
 #define FUNCTION 12
@@ -86,6 +86,17 @@
       >;
     };
 
+    /* Below Mouse/Lower/Raise so Ctrl-first chords still see those layers. */
+    CtrlColemak {
+      display-name = "Ctrl Colemak";
+      bindings = <
+        &kp TAB    &kp Q  &kp W  &kp F  &kp P  &kp G     &kp J  &kp L  &kp U     &kp Y    &kp SEMI  &lt FUNCTION ESCAPE
+        &kp LSHFT  &kp A  &kp R  &kp S  &kp T  &kp D     &kp H  &kp N  &kp E     &kp I    &kp O     &kp SQT
+        &kp LCTRL  &kp Z  &kp X  &kp C  &kp V  &kp B     &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH  &kp LGUI
+                            &trans  &trans  &kp SPACE     &kp RET  &trans
+      >;
+    };
+
     Mouse {
       display-name = "Mouse";
       bindings = <
@@ -153,17 +164,6 @@
         &trans  &none  &none  &none  &none  &none     &none  &none  &none  &none  &none  &trans
         &trans  &none  &none  &none  &none  &none     &none  &none  &none  &none  &none  &trans
                         &none  &bootloader  &bootloader     &bootloader  &none
-      >;
-    };
-
-    /* Colemak positions for Ctrl chords on Russian; activated by ctrl_colemak_overlay on dongle */
-    CtrlColemak {
-      display-name = "Ctrl Colemak";
-      bindings = <
-        &kp TAB    &kp Q  &kp W  &kp F  &kp P  &kp G     &kp J  &kp L  &kp U     &kp Y    &kp SEMI  &lt FUNCTION ESCAPE
-        &kp LSHFT  &kp A  &kp R  &kp S  &kp T  &kp D     &kp H  &kp N  &kp E     &kp I    &kp O     &kp SQT
-        &kp LCTRL  &kp Z  &kp X  &kp C  &kp V  &kp B     &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH  &kp LGUI
-                            &trans  &trans  &kp SPACE     &kp RET  &trans
       >;
     };
 

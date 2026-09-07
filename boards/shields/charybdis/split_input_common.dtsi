@@ -3,10 +3,11 @@
 
 #define COLEMAK 0
 #define RUSSIAN 1
-#define MOUSE 2
-#define LOWER 3
-#define RAISE 4
-#define SCROLL 5
+#define CTRL_COLEMAK 2
+#define MOUSE 3
+#define LOWER 4
+#define RAISE 5
+#define SCROLL 6
 / {
   split_inputs {
     #address-cells = <1>;
