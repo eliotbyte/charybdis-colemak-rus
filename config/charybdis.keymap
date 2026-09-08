@@ -19,7 +19,8 @@
 #define FUNCTION 12
 
 #define MOVE_BASE (ZMK_POINTING_DEFAULT_MOVE_VAL)
-#define SCROLL_BASE (ZMK_POINTING_DEFAULT_SCRL_VAL * 16)
+/* Legacy wheel ticks (smooth scroll off on dongle — ZMK #3383). *16 was hi-res only. */
+#define SCROLL_BASE (ZMK_POINTING_DEFAULT_SCRL_VAL / 2)
 #define SCROLL_FAST (SCROLL_BASE * 3)
 
 / {

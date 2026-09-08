@@ -82,7 +82,8 @@
 
             &zip_xy_to_scroll_mapper
 
-            &zip_scroll_scaler 30 48
+            /* 15/48 ≈ 0.31× — was 30/48; soft for legacy ticks with smooth off */
+            &zip_scroll_scaler 15 192
 
             &zip_scroll_transform (INPUT_TRANSFORM_Y_INVERT)
 

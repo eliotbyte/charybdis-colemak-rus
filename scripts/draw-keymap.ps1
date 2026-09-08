@@ -1,10 +1,33 @@
 # Render keymap-drawer SVG locally (no CI).
 param(
-    [string]$Out = "keymap-drawer/charybdis.svg"
+    [string]$Out = "keymap-drawer/charybdis.svg",
+    [string]$Yaml = "",
+    [string]$Config = "keymap-drawer/config.yaml",
+    [switch]$New,
+    [switch]$All
 )
 
 $ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot\..
+
+if ($New) {
+    if ($Out -eq "keymap-drawer/charybdis.svg") { $Out = "keymap-drawer/charybdis-new.svg" }
+    if ([string]::IsNullOrWhiteSpace($Yaml)) { $Yaml = "keymap-drawer/charybdis-new.yaml" }
+}
+elseif ($All) {
+    if (-not [string]::IsNullOrWhiteSpace($Yaml)) {
+        Write-Error "-All cannot be combined with -Yaml; run twice or use -New for the experimental file only."
+    }
+    & $PSCommandPath -Config $Config
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    & $PSCommandPath -New -Config $Config
+    exit $LASTEXITCODE
+}
+
+if ([string]::IsNullOrWhiteSpace($Yaml)) {
+    $Yaml = [System.IO.Path]::ChangeExtension($Out, ".yaml")
+    if (-not (Test-Path $Yaml)) { $Yaml = "keymap-drawer/charybdis.yaml" }
+}
 
 $env:PYTHONIOENCODING = "utf-8"
 
@@ -13,7 +36,7 @@ if (-not (Get-Command keymap -ErrorAction SilentlyContinue)) {
 }
 
 New-Item -ItemType Directory -Force -Path (Split-Path $Out -Parent) | Out-Null
-& keymap -c keymap-drawer/config.yaml draw keymap-drawer/charybdis.yaml -o $Out
+& keymap -c $Config draw $Yaml -o $Out
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 # keymap-drawer only injects CSS; gradients need SVG defs
@@ -114,9 +137,11 @@ function Set-LayerKeyTopFill {
 $svg = Set-LayerKeyTopFill -Svg $svg -LayerName 'Lower' -GradientId 'key-fill-lower'
 $svg = Set-LayerKeyTopFill -Svg $svg -LayerName 'Raise' -GradientId 'key-fill-raise'
 $svg = Set-LayerKeyTopFill -Svg $svg -LayerName 'Fn' -GradientId 'key-fill-fn'
+$svg = Set-LayerKeyTopFill -Svg $svg -LayerName 'GameLower' -GradientId 'key-fill-lower'
 
 $Lightning = [char]0x2607
-$StackedLine1X = -6
+$StackedLine1X = -8
+$StackedLine2X = 10
 $StackedLine2Y = 9
 $StackedLine1Y = -7
 
@@ -245,28 +270,96 @@ function Set-DualKeyInLayer {
 function Format-StackedKeySvg {
     param(
         [string]$Line1,
-        [string]$Line2,
+        [string]$Line2 = '',
         [string]$Line1IconMarkup = $null,
+        [string]$Line2IconMarkup = $null,
         [double]$Line1X = $StackedLine1X,
         [double]$Line1Y = $StackedLine1Y,
-        [double]$Line2X = 0
+        [double]$Line2X = 0,
+        [double]$Line2IconOffsetY = 0,
+        [switch]$CyrillicLayout
     )
-    if ($Line1IconMarkup) {
+    $line1Safe = Escape-SvgText $Line1
+    if ($Line1IconMarkup -and $CyrillicLayout) {
+        $line1Block = @"
+<text x="$Line1X" y="$Line1Y" class="stacked-line1" text-anchor="start">$line1Safe</text>
+$Line1IconMarkup
+"@
+    } elseif ($Line1IconMarkup) {
         $line1Block = @"
 <g transform="translate($Line1X, $Line1Y)">
-<text x="0" y="0" class="stacked-line1" text-anchor="start" dominant-baseline="central">$Line1</text>
+<text x="0" y="0" class="stacked-line1" text-anchor="start" dominant-baseline="central">$line1Safe</text>
 $Line1IconMarkup
 </g>
 "@
     } else {
-        $line1Block = "<text x=`"$Line1X`" y=`"$Line1Y`" class=`"stacked-line1`" text-anchor=`"start`">$Line1</text>"
+        $line1Block = "<text x=`"$Line1X`" y=`"$Line1Y`" class=`"stacked-line1`" text-anchor=`"start`">$line1Safe</text>"
+    }
+    if ($Line2IconMarkup) {
+        $line2Block = @"
+<g transform="translate($Line2X, $($StackedLine2Y - 8 + $Line2IconOffsetY))">
+$Line2IconMarkup
+</g>
+"@
+    } else {
+        $line2Safe = Escape-SvgText $Line2
+        $line2Block = "<text x=`"$Line2X`" y=`"$StackedLine2Y`" class=`"stacked-line2`" text-anchor=`"middle`">$line2Safe</text>"
     }
     @"
 <g class="stacked-key">
-<text x="$Line2X" y="$StackedLine2Y" class="stacked-line2" text-anchor="middle">$Line2</text>
+$line2Block
 $line1Block
 </g>
 "@
+}
+
+function Set-StackedKeyFromTapInLayer {
+    param(
+        [string]$Svg,
+        [string]$LayerName,
+        [string]$Tap,
+        [string]$Line1,
+        [string]$Line1IconFile = $null,
+        [double]$Line1IconSize = 12,
+        [string]$Line1IconFill = '#FFFFFF',
+        [double]$Line1IconOffsetX = 10,
+        [double]$Line1X = $StackedLine1X,
+        [double]$Line1Y = $StackedLine1Y,
+        [string]$Line2IconFile = $null,
+        [double]$Line2IconSize = 17,
+        [string]$Line2IconFill = '#FFFFFF',
+        [double]$Line2X = 10,
+        [double]$Line2IconOffsetY = 0,
+        [switch]$CyrillicLayout
+    )
+    $line1IconMarkup = $null
+    if ($Line1IconFile) {
+        $icon = Get-SvgIconMeta $Line1IconFile
+        $scaled = Format-ScaledIconPath -ViewBox $icon.ViewBox -PathData $icon.PathData `
+            -Size $Line1IconSize -FillColor $Line1IconFill
+        if ($CyrillicLayout) {
+            $line1IconMarkup = @"
+<g transform="translate($($Line1X + $Line1IconOffsetX), $($Line1Y - 2))">
+$scaled
+</g>
+"@
+        } else {
+            $line1IconMarkup = Format-InlineIconAfterText -ViewBox $icon.ViewBox -PathData $icon.PathData `
+                -Size $Line1IconSize -FillColor $Line1IconFill -OffsetX $Line1IconOffsetX
+        }
+    }
+    $line2IconMarkup = $null
+    if ($Line2IconFile) {
+        $icon = Get-SvgIconMeta $Line2IconFile
+        $line2IconMarkup = Format-ScaledIconPath -ViewBox $icon.ViewBox -PathData $icon.PathData `
+            -Size $Line2IconSize -FillColor $Line2IconFill
+    }
+    $replacement = Format-StackedKeySvg -Line1 $Line1 -Line1IconMarkup $line1IconMarkup `
+        -Line2IconMarkup $line2IconMarkup -Line1X $Line1X -Line1Y $Line1Y -Line2X $Line2X `
+        -Line2IconOffsetY $Line2IconOffsetY -CyrillicLayout:$CyrillicLayout
+    $escapedTap = [regex]::Escape($Tap)
+    $pattern = "(class=`"layer-$LayerName`">[\s\S]*?)<text x=`"0`" y=`"\d+`" class=`"key tap`">$escapedTap</text>"
+    [regex]::Replace($Svg, $pattern, "`${1}$replacement", 1)
 }
 
 function Format-ScaledIconPath {
@@ -325,7 +418,7 @@ function Set-StackedKeyFromTapHold {
         [double]$Line1IconOffsetY = 0,
         [double]$Line1X = $StackedLine1X,
         [double]$Line1Y = $StackedLine1Y,
-        [double]$Line2X = 0
+        [double]$Line2X = $StackedLine2X
     )
     $line1IconMarkup = $null
     if ($Line1IconFile) {
@@ -339,6 +432,26 @@ function Set-StackedKeyFromTapHold {
         $line2 = & $Line2FromHold $m.Groups[1].Value
         Format-StackedKeySvg -Line1 $Line1 -Line2 $line2 -Line1IconMarkup $line1IconMarkup -Line1X $Line1X -Line1Y $Line1Y -Line2X $Line2X
     })
+}
+
+function Set-StackedKeyFromTapHoldInLayer {
+    param(
+        [string]$Svg,
+        [string]$LayerName,
+        [string]$Tap,
+        [string]$HoldPattern,
+        [string]$Line1,
+        [scriptblock]$Line2FromHold,
+        [double]$Line1X = $StackedLine1X,
+        [double]$Line1Y = $StackedLine1Y,
+        [double]$Line2X = $StackedLine2X
+    )
+    $pattern = "(class=`"layer-$LayerName`">[\s\S]*?)<text x=`"0`" y=`"\d+`" class=`"key tap`">$([regex]::Escape($Tap))</text>\s*(?:<a href=`"#[^`"]+`">\s*)?<text x=`"0`" y=`"\d+`" class=`"key hold(?: layer-activator)?`">($HoldPattern)</text>\s*(?:</a>)?"
+    [regex]::Replace($Svg, $pattern, {
+        param($m)
+        $line2 = & $Line2FromHold $m.Groups[2].Value
+        $m.Groups[1].Value + (Format-StackedKeySvg -Line1 $Line1 -Line2 $line2 -Line1X $Line1X -Line1Y $Line1Y -Line2X $Line2X)
+    }, 1)
 }
 
 function Get-SvgIconMeta {
@@ -406,6 +519,22 @@ function Set-KeyIconFromTap {
     [regex]::Replace($Svg, $pattern, $replacement)
 }
 
+function Set-KeyIconFromTapInLayer {
+    param(
+        [string]$Svg,
+        [string]$LayerName,
+        [string]$Tap,
+        [string]$IconFile,
+        [double]$Size = 24,
+        [string]$FillColor = '#FFFFFF'
+    )
+    $escapedTap = [regex]::Escape($Tap)
+    $icon = Get-SvgIconMeta $IconFile
+    $replacement = Format-KeyIconSvg -ViewBox $icon.ViewBox -PathData $icon.PathData -Size $Size -FillColor $FillColor
+    $pattern = "(class=`"layer-$LayerName`">[\s\S]*?)<text x=`"0`" y=`"\d+`" class=`"key tap(?: layer-activator)?`">$escapedTap</text>\s*(?:</a>)?"
+    [regex]::Replace($Svg, $pattern, "`${1}$replacement", 1)
+}
+
 function Set-KeyBluetoothSlotFromTap {
     param(
         [string]$Svg,
@@ -431,12 +560,12 @@ $svg = Set-StackedKeyFromTapHold -Svg $svg -Tap 'Alt' -HoldPattern 'RUS|ENG|RU|E
     -Line1 "${Lightning}Alt" -Line2FromHold {
         param($hold)
         switch ($hold) { 'RU' { 'RUS' } 'EN' { 'ENG' } default { $hold } }
-    }
+    } -Line2X 0
 
 $svg = Set-StackedKeyFromTapHold -Svg $svg -Tap 'Esc' -HoldPattern 'Fn' `
     -Line1 $Lightning -Line2FromHold { param($hold) 'Esc' } `
     -Line1IconFile 'keymap-drawer/icons/star.svg' -Line1IconSize 12 -Line1IconFill '#F9D382' `
-    -Line1IconOffsetX 10 -Line1IconOffsetY -2.5 -Line1X -11
+    -Line1IconOffsetX 10 -Line1IconOffsetY -2.5 -Line1X -13 -Line2X 0
 
 $Backtick = [char]0x60
 $CyrE = [char]0x0415      # Е
@@ -453,12 +582,50 @@ $svg = Set-StackedKeyFromTapHold -Svg $svg -Tap $CyrShcha -HoldPattern $CyrSha `
 $svg = Set-StackedKeyFromTapHold -Svg $svg -Tap $CyrHard -HoldPattern $CyrSoft `
     -Line1 "$Lightning$CyrHard" -Line2FromHold { param($hold) $hold } -Line2X 10
 
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap '@' -HoldPattern '#' `
+    -Line1 "${Lightning}@" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap '$' -HoldPattern '&amp;' `
+    -Line1 "${Lightning}`$" -Line2FromHold { param($hold) '&' }
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap '[' -HoldPattern '\(' `
+    -Line1 "${Lightning}[" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap ']' -HoldPattern '\)' `
+    -Line1 "${Lightning}]" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap '&lt;' -HoldPattern '\{' `
+    -Line1 "${Lightning}<" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap '&gt;' -HoldPattern '\}' `
+    -Line1 "${Lightning}>" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap '*' -HoldPattern '\+' `
+    -Line1 "${Lightning}*" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap '_' -HoldPattern '-' `
+    -Line1 "${Lightning}_" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap ':' -HoldPattern ';' `
+    -Line1 "${Lightning}:" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap $Backtick -HoldPattern ',' `
+    -Line1 "${Lightning}$Backtick" -Line2FromHold { param($hold) $hold }
+$BacktickHold = [regex]::Escape($Backtick)
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap '~' -HoldPattern $BacktickHold `
+    -Line1 "${Lightning}~" -Line2FromHold { param($hold) $hold }
+$BackslashHold = [regex]::Escape('\')
+$svg = Set-StackedKeyFromTapHoldInLayer -Svg $svg -LayerName 'Lower' -Tap '^' -HoldPattern '=' `
+    -Line1 "${Lightning}^" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHoldInLayer -Svg $svg -LayerName 'Lower' -Tap '!' -HoldPattern $BackslashHold `
+    -Line1 "${Lightning}!" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHoldInLayer -Svg $svg -LayerName 'Lower' -Tap '?' -HoldPattern '/' `
+    -Line1 "${Lightning}?" -Line2FromHold { param($hold) $hold }
+$svg = Set-StackedKeyFromTapHoldInLayer -Svg $svg -LayerName 'Lower' -Tap '%' -HoldPattern '\|' `
+    -Line1 "${Lightning}%" -Line2FromHold { param($hold) $hold }
+$Apostrophe = [char]0x27
+$svg = Set-StackedKeyFromTapHold -Svg $svg -Tap '&quot;' -HoldPattern "(?:&#x27;|')" `
+    -Line1 "${Lightning}`"" -Line2FromHold { param($hold) $Apostrophe }
+
 $SpaceSymbol = '&#x2423;'
 $EnterSymbol = '&#x21B5;'
 
-$svg = Set-DualKeyTapGlobal -Svg $svg -TapKey ';' -TapRegex ';' -Line1 ':' -Line2 ';'
-$svg = Set-DualKeyTapGlobal -Svg $svg -TapKey "'" -TapRegex '(?:&#x27;|'')' -Line1 '"' -Line2 "'"
-$svg = Set-DualKeyTapGlobal -Svg $svg -TapKey ',' -TapRegex ',' -Line1 '<' -Line2 ','
+$svg = Set-DualKeyInLayer -Svg $svg -LayerName 'Colemak' -TapKey ';' -TapRegex ';' -Line1 ':' -Line2 ';'
+$svg = Set-DualKeyInLayer -Svg $svg -LayerName 'Colemak' -TapKey "'" -TapRegex '(?:&#x27;|'')' -Line1 '"' -Line2 "'"
+$svg = Set-DualKeyInLayer -Svg $svg -LayerName 'Russian' -TapKey ';' -TapRegex ';' -Line1 ':' -Line2 ';'
+$svg = Set-DualKeyInLayer -Svg $svg -LayerName 'Russian' -TapKey "'" -TapRegex '(?:&#x27;|'')' -Line1 '"' -Line2 "'"
+$svg = Set-DualKeyInLayer -Svg $svg -LayerName 'Colemak' -TapKey ',' -TapRegex ',' -Line1 '<' -Line2 ','
 $svg = Set-DualKeyInLayer -Svg $svg -LayerName 'Colemak' -TapKey '/' -TapRegex '/' -Line1 '?' -Line2 '/'
 $svg = Set-DualKeyTapGlobal -Svg $svg -TapKey 'Space' -TapRegex 'Space' -Line1 'Space' -Line2 "$SpaceSymbol"
 $svg = Set-DualKeyTapGlobal -Svg $svg -TapKey 'Enter' -TapRegex 'Enter' -Line1 'Enter' -Line2 "$EnterSymbol"
@@ -466,12 +633,46 @@ $svg = Set-DualKeyInLayer -Svg $svg -LayerName 'Colemak' -TapKey '.' -TapRegex '
 $svg = Set-DualKeyInLayer -Svg $svg -LayerName 'Russian' -TapKey '.' -TapRegex '\.' -Line1 ',' -Line2 '.'
 $svg = Set-KeyIconFromTap -Svg $svg -Tap 'Lower' -IconFile 'keymap-drawer/icons/star.svg' -Size 18 -FillColor '#82C4F9'
 $svg = Set-KeyIconFromTap -Svg $svg -Tap 'Raise' -IconFile 'keymap-drawer/icons/star.svg' -Size 18 -FillColor '#E582F9'
+$svg = Set-KeyIconFromTapInLayer -Svg $svg -LayerName 'Game' -Tap 'GLower' -IconFile 'keymap-drawer/icons/star.svg' -Size 18 -FillColor '#82C4F9'
 
 $LegendIconSize = 17
 $TextIconFill = '#FFFFFF'
-$svg = Set-KeyIconFromTap -Svg $svg -Tap 'Vol-' -IconFile 'keymap-drawer/icons/volume_down.svg' -Size $LegendIconSize -FillColor $TextIconFill
-$svg = Set-KeyIconFromTap -Svg $svg -Tap 'Vol+' -IconFile 'keymap-drawer/icons/volume_up.svg' -Size $LegendIconSize -FillColor $TextIconFill
-$svg = Set-KeyIconFromTap -Svg $svg -Tap 'Mute' -IconFile 'keymap-drawer/icons/volume_off.svg' -Size $LegendIconSize -FillColor $TextIconFill
+$PrevTrack = [char]0x21AF   # ↯
+$LowerMediaStacked = @{
+    Line1 = $PrevTrack
+    Line1X = $StackedLine1X - 5
+    Line1IconSize = 18
+    Line1IconFill = $TextIconFill
+    Line1IconOffsetX = 10
+    Line2IconSize = $LegendIconSize
+    Line2IconFill = $TextIconFill
+    Line2X = 10
+    Line2IconOffsetY = 3
+}
+$svg = Set-StackedKeyFromTapInLayer -Svg $svg -LayerName 'Lower' -Tap 'Vol-' -CyrillicLayout `
+    -Line1 $LowerMediaStacked.Line1 -Line1X $LowerMediaStacked.Line1X `
+    -Line1IconFile 'keymap-drawer/icons/skip_previous.svg' `
+    -Line1IconSize $LowerMediaStacked.Line1IconSize -Line1IconFill $LowerMediaStacked.Line1IconFill `
+    -Line1IconOffsetX $LowerMediaStacked.Line1IconOffsetX `
+    -Line2IconFile 'keymap-drawer/icons/volume_down.svg' `
+    -Line2IconSize $LowerMediaStacked.Line2IconSize -Line2IconFill $LowerMediaStacked.Line2IconFill `
+    -Line2X $LowerMediaStacked.Line2X -Line2IconOffsetY $LowerMediaStacked.Line2IconOffsetY
+$svg = Set-StackedKeyFromTapInLayer -Svg $svg -LayerName 'Lower' -Tap 'Mute' -CyrillicLayout `
+    -Line1 $LowerMediaStacked.Line1 -Line1X $LowerMediaStacked.Line1X `
+    -Line1IconFile 'keymap-drawer/icons/play_arrow.svg' `
+    -Line1IconSize $LowerMediaStacked.Line1IconSize -Line1IconFill $LowerMediaStacked.Line1IconFill `
+    -Line1IconOffsetX $LowerMediaStacked.Line1IconOffsetX `
+    -Line2IconFile 'keymap-drawer/icons/volume_off.svg' `
+    -Line2IconSize $LowerMediaStacked.Line2IconSize -Line2IconFill $LowerMediaStacked.Line2IconFill `
+    -Line2X $LowerMediaStacked.Line2X -Line2IconOffsetY $LowerMediaStacked.Line2IconOffsetY
+$svg = Set-StackedKeyFromTapInLayer -Svg $svg -LayerName 'Lower' -Tap 'Vol+' -CyrillicLayout `
+    -Line1 $LowerMediaStacked.Line1 -Line1X $LowerMediaStacked.Line1X `
+    -Line1IconFile 'keymap-drawer/icons/skip_next.svg' `
+    -Line1IconSize $LowerMediaStacked.Line1IconSize -Line1IconFill $LowerMediaStacked.Line1IconFill `
+    -Line1IconOffsetX $LowerMediaStacked.Line1IconOffsetX `
+    -Line2IconFile 'keymap-drawer/icons/volume_up.svg' `
+    -Line2IconSize $LowerMediaStacked.Line2IconSize -Line2IconFill $LowerMediaStacked.Line2IconFill `
+    -Line2X $LowerMediaStacked.Line2X -Line2IconOffsetY $LowerMediaStacked.Line2IconOffsetY
 $svg = Set-KeyIconFromTap -Svg $svg -Tap 'Up' -IconFile 'keymap-drawer/icons/up.svg' -Size $LegendIconSize -FillColor $TextIconFill
 $svg = Set-KeyIconFromTap -Svg $svg -Tap 'Down' -IconFile 'keymap-drawer/icons/down.svg' -Size $LegendIconSize -FillColor $TextIconFill
 $svg = Set-KeyIconFromTap -Svg $svg -Tap 'Left' -IconFile 'keymap-drawer/icons/left.svg' -Size $LegendIconSize -FillColor $TextIconFill

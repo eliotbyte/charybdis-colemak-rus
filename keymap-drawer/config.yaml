@@ -119,6 +119,9 @@ draw_config:
     .layer-Lower rect.key-top {
       fill: url(#key-fill-lower);
     }
+    .layer-GameLower rect.key-top {
+      fill: url(#key-fill-lower);
+    }
     .layer-Raise rect.key-top {
       fill: url(#key-fill-raise);
     }
